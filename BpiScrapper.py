@@ -126,7 +126,7 @@ class Company:
 
         finally:
             if self.keepDriver == False:
-                print("Quit driver after company loading")
+                print("Quit driver after company loaded")
                 driver.quit()
 
 
@@ -178,9 +178,6 @@ class Companies:
 
 
 if __name__ == '__main__':
-    urlSource = "https://lehub.web.bpifrance.fr/search?advancedmode=1&refinementList%5Btechnologies%5D%5B0%5D=Intelligence%20Artificielle&refinementList%5Bmarkets%5D%5B0%5D=Technologie%20%26%20Telecommunications&page=1#listStartups"
+    urlSource = "https://lehub.web.bpifrance.fr/search?advancedmode=1&refinementList%5Btechnologies%5D%5B0%5D=Intelligence%20Artificielle&page=1"
     companies = Companies(urlSource)
-    companies.extractCompanies(folder="./data/")
-
-
-    #Company('https://lehub.web.bpifrance.fr/startup/hidden-market').getData()
+    companies.extractCompanies(folder="data/")
