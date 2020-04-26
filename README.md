@@ -7,7 +7,7 @@ Extract companies data from the BPI website
 
 Selenium needs a webdriver to work; more information, proper installation instructions and documentation are available [here](https://selenium-python.readthedocs.io/installation.html) and [here](https://pythonspot.com/selenium-webdriver/).
 
-## Example
+## Examples
 
 Extract for one company
 ```python
@@ -19,7 +19,7 @@ pprint(company.getData())
 ```
 
 Result
-'''
+```json
 {'identity': {'adress': '9 RUE DAREAU\nPARIS 14\n75014 France',
               'business_model': ['B2B', 'SAAS'],
               'creation': '2017',
@@ -78,7 +78,15 @@ Result
                              'maximiser le ROI du bot',
               'title': 'Logiciel SaaS AskHubRéduire'},
  'team': [{'function': 'Co-founder', 'name': 'Mathieu Rouxel'}]}
- '''
+```
 
+ Extraction for all companies from a request. Data is saved in json files.
+ ```python
+ from BpiScrapper import Company
+
+ urlSource = "https://lehub.web.bpifrance.fr/search?advancedmode=1&refinementList%5Btechnologies%5D%5B0%5D=Intelligence%20Artificielle&page=1"
+ companies = Companies(urlSource)
+ companies.extractCompanies(folder="./data/")
+ ```
 ## Disclaimer
 The scrapper presented here are proposed for experimentation purposes only. Please be advised that tools designed to automatically fetch data may be incompatible with the terms of use of some website.
