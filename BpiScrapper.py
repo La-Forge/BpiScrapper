@@ -21,15 +21,9 @@ class Company:
             self.loadData()
         return self.data
 
-    def loadData(self, existing_driver=None):
+    def loadData(self):
         try:
-            driver = None
-            if existing_driver:
-                self.keepDriver = True
-                driver = existing_driver
-            else:
-                self.keepDriver = False
-                driver = webdriver.Chrome()
+            driver = webdriver.Chrome()
 
             # load page
             driver.get(self.url)
@@ -111,8 +105,11 @@ class Company:
 
             # extract products
             if (len(driver.find_elements(By.XPATH, '//div[contains(@class,"startup__products")]'))>0):
+                title = driver.find_element(By.XPATH, '//div[contains(@class,"startup__products")]/div[2]/div/div/div[1]').text
+                if title.endswith('Réduire'):
+                    title = title[:-7]
                 self.data['products'] = {
-                    'title': driver.find_element(By.XPATH, '//div[contains(@class,"startup__products")]/div[2]/div/div/div[1]').text,
+                    'title': title,
                     'description': driver.find_element(By.XPATH, '//div[contains(@class,"startup__products")]/div[2]/div/div/div[2]').text
                 }
 
@@ -125,9 +122,7 @@ class Company:
                 })
 
         finally:
-            if self.keepDriver == False:
-                print("Quit driver after company loaded")
-                driver.quit()
+            driver.quit()
 
 
 class Companies:
@@ -181,3 +176,5 @@ if __name__ == '__main__':
     urlSource = "https://lehub.web.bpifrance.fr/search?advancedmode=1&refinementList%5Btechnologies%5D%5B0%5D=Intelligence%20Artificielle&page=1"
     companies = Companies(urlSource)
     companies.extractCompanies(folder="data/")
+
+    #Company('https://lehub.web.bpifrance.fr/startup/2spark').getData()
